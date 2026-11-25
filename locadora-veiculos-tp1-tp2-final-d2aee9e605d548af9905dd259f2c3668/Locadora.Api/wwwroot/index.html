@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17213a">
+  <title>Locadora Atlas | Gestão de veículos</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Navegação principal">
+      <a class="brand" href="#inicio" aria-label="Locadora Atlas, início">
+        <span class="brand-mark" aria-hidden="true">A</span>
+        <span><strong>ATLAS</strong><small>LOCADORA</small></span>
+      </a>
+      <div class="sidebar-caption">GESTÃO</div>
+      <nav id="main-nav" class="nav-list">
+        <button class="nav-item active" type="button" data-page="inicio"><span class="nav-icon">▦</span> Visão geral</button>
+        <button class="nav-item" type="button" data-page="fabricantes"><span class="nav-icon">◇</span> Fabricantes</button>
+        <button class="nav-item" type="button" data-page="veiculos"><span class="nav-icon">▤</span> Veículos</button>
+        <button class="nav-item" type="button" data-page="clientes"><span class="nav-icon">♙</span> Clientes</button>
+        <button class="nav-item" type="button" data-page="alugueis"><span class="nav-icon">◷</span> Aluguéis</button>
+        <button class="nav-item" type="button" data-page="pagamentos"><span class="nav-icon">◉</span> Pagamentos</button>
+      </nav>
+      <div class="sidebar-caption sidebar-caption-second">ANÁLISE</div>
+      <nav class="nav-list">
+        <button class="nav-item" type="button" data-page="consultas"><span class="nav-icon">▥</span> Consultas</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="online-line"><span id="api-dot" class="online-dot"></span><span id="api-status">Conectando à API</span></div>
+        <a href="/swagger" target="_blank" rel="noopener">Abrir Swagger <span aria-hidden="true">↗</span></a>
+        <a href="/wireframes.html" target="_blank" rel="noopener">Ver wireframes <span aria-hidden="true">↗</span></a>
+      </div>
+    </aside>
+
+    <main class="main-content" id="main-content">
+      <header class="topbar">
+        <div class="topbar-left"><span class="topbar-kicker">PAINEL DE CONTROLE</span><span class="topbar-separator">/</span><span id="crumb">Visão geral</span></div>
+        <div class="topbar-right"><span class="topbar-date" id="today"></span><span class="avatar">AT</span></div>
+      </header>
+      <div class="content-container">
+        <section id="page-inicio" class="page active" aria-labelledby="home-title">
+          <div class="hero">
+            <div><div class="hero-eyebrow">GESTÃO DE FROTA</div><h1 id="home-title">Tudo em movimento,<br><em>sob controle.</em></h1><p>Cadastros, locações e pagamentos em um só lugar. Dados conectados à sua API e ao SQL Server Express.</p><button class="btn btn-white" type="button" data-jump="alugueis">Ver aluguéis <span aria-hidden="true">↗</span></button></div>
+            <div class="hero-art" aria-hidden="true"><div class="art-circle art-circle-one"></div><div class="art-circle art-circle-two"></div><div class="art-road"></div><div class="art-car"><div class="car-top"></div><div class="car-body"></div><div class="car-wheel car-wheel-left"></div><div class="car-wheel car-wheel-right"></div></div></div>
+          </div>
+          <div class="section-heading"><div><span class="eyebrow">RESUMO OPERACIONAL</span><h2>Visão geral</h2></div><button id="refresh-home" class="btn btn-light" type="button">Atualizar dados</button></div>
+          <div class="metrics">
+            <article class="metric"><span class="metric-label">Veículos cadastrados</span><strong id="metric-veiculos">—</strong><span class="metric-foot">Frota total</span></article>
+            <article class="metric"><span class="metric-label">Clientes cadastrados</span><strong id="metric-clientes">—</strong><span class="metric-foot">Na base de dados</span></article>
+            <article class="metric"><span class="metric-label">Aluguéis em aberto</span><strong id="metric-alugueis">—</strong><span class="metric-foot">Aguardando devolução</span></article>
+            <article class="metric"><span class="metric-label">Pagamentos registrados</span><strong id="metric-pagamentos">—</strong><span class="metric-foot">Transações efetuadas</span></article>
+          </div>
+          <div class="home-grid">
+            <section class="panel"><div class="panel-head"><div><span class="eyebrow">ÚLTIMOS REGISTROS</span><h3>Aluguéis recentes</h3></div><button class="text-button" type="button" data-jump="alugueis">Ver todos</button></div><div id="recent-rentals" class="recent-list"><p class="muted">Carregando…</p></div></section>
+            <section class="panel quick-panel"><div class="panel-head"><div><span class="eyebrow">ATALHOS</span><h3>Acesso rápido</h3></div></div><button class="quick-link" type="button" data-jump="veiculos"><span class="quick-icon">▤</span><span><strong>Frota</strong><small>Cadastre e consulte veículos</small></span><span aria-hidden="true">↗</span></button><button class="quick-link" type="button" data-jump="clientes"><span class="quick-icon">♙</span><span><strong>Clientes</strong><small>Gerencie seus clientes</small></span><span aria-hidden="true">↗</span></button><button class="quick-link" type="button" data-jump="consultas"><span class="quick-icon">▥</span><span><strong>Consultas</strong><small>Explore filtros e relatórios</small></span><span aria-hidden="true">↗</span></button></section>
+          </div>
+        </section>
+
+        <section id="page-resource" class="page" aria-labelledby="resource-title">
+          <div class="page-heading"><div><span class="eyebrow" id="resource-eyebrow">CADASTROS</span><h1 id="resource-title"></h1><p id="resource-description"></p></div><button id="add-button" class="btn btn-primary" type="button">+ Novo registro</button></div>
+          <div class="panel records-panel">
+            <div class="records-toolbar"><div class="filters" id="resource-filters"></div><button id="clear-filters" class="btn btn-light" type="button">Limpar filtros</button></div>
+            <div class="table-wrap"><table><thead id="resource-head"></thead><tbody id="resource-body"></tbody></table></div>
+            <div id="resource-foot" class="table-foot"></div>
+          </div>
+        </section>
+
+        <section id="page-consultas" class="page" aria-labelledby="consultas-title">
+          <div class="page-heading"><div><span class="eyebrow">ANÁLISE DE DADOS</span><h1 id="consultas-title">Consultas & filtros</h1><p>As cinco consultas do backend, combinando informações entre tabelas.</p></div></div>
+          <div class="query-layout"><div class="query-menu" id="query-menu"></div><div class="panel query-panel"><div class="panel-head"><div><span class="eyebrow" id="query-join">INNER JOIN</span><h3 id="query-title">Selecione uma consulta</h3></div></div><p class="query-description" id="query-description"></p><form id="query-form" class="query-form"></form><div id="query-result" class="query-result"><div class="empty-state"><span>▥</span><strong>Pronto para consultar</strong><p>Escolha um filtro e execute a busca.</p></div></div></div></div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <dialog id="record-dialog" class="record-dialog" aria-labelledby="dialog-title"><form id="record-form" novalidate><div class="dialog-head"><div><span class="eyebrow">CADASTRO</span><h2 id="dialog-title"></h2></div><button id="dialog-close" class="icon-button" type="button" aria-label="Fechar">×</button></div><div id="form-fields" class="form-grid"></div><div id="form-error" class="form-error" role="alert" hidden></div><div class="dialog-actions"><button id="dialog-cancel" type="button" class="btn btn-light">Cancelar</button><button id="dialog-submit" type="submit" class="btn btn-primary">Salvar registro</button></div></form></dialog>
+  <dialog id="confirm-dialog" class="confirm-dialog" aria-labelledby="confirm-title"><div class="dialog-head"><div><span class="eyebrow">CONFIRMAÇÃO</span><h2 id="confirm-title">Excluir registro?</h2></div></div><p id="confirm-message"></p><div class="dialog-actions"><button id="confirm-cancel" class="btn btn-light" type="button">Cancelar</button><button id="confirm-yes" class="btn btn-danger" type="button">Excluir</button></div></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
